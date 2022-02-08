@@ -6,6 +6,7 @@
       <a href="#">
         <img class="rounded-t-lg" :src="imageURL" alt="" />
       </a>
+      <h2 class="mt-2 ml-4 text-gray-600">Posted: {{ dateCreated }}</h2>
       <div class="p-5">
         <a href="#">
           <h5
