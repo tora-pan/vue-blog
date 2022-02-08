@@ -1,9 +1,9 @@
 <template>
-  <div class="flex flex-col justify-center my-8 border-2">
+  <div class="flex flex-col justify-center">
     <!-- Header -->
     <h1 class="text-4xl">My Blog</h1>
     <!-- Featured Blog Post -->
-    <div class="w-5/6 mx-auto">
+    <div class="w-5/6 mx-auto my-8">
       <FeaturedCard
         :imageURL="featured.imageURL"
         :title="featured.title"
@@ -86,9 +86,10 @@ export default {
       ],
       featured: {
         imageURL: "https://picsum.photos/1800/300",
-        title: "post.title",
-        summary: "post.summary",
-        dateCreated: "post.dateCreated",
+        title: "Featured Blog Post Title",
+        summary:
+          "Here is a bunch of textHere is a bunch of text for a summary Here is a bunch of text for a summary Here is a bunch of text for a summaryHere is a bunch of text for a summary Here is a bunch of text for a summary Here is a bunch of text for a summaryHere is a bunch of text for a summary Here is a bunch of text for a summary Here is a bunch of text for a summaryHere is a bunch of text for a summary Here is a bunch of text for a summary Here is a bunch of text for a summary for a summary Here is a bunch of text for a summary Here is a bunch of text for a summary",
+        dateCreated: "2/7/2022",
       },
     };
   },
