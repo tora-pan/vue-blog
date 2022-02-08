@@ -55,7 +55,7 @@
                   : 'text-gray-700'
               "
               @click="toggleMenu"
-              class="block py-2 pr-4 pl-3 rounded border-b md:bg-transparent md:p-0 dark:text-white"
+              class="block py-2 pr-4 pl-3 rounded md:bg-transparent md:p-0 dark:text-white"
               aria-current="page"
             >
               Home</router-link
@@ -70,7 +70,7 @@
                   : 'text-gray-700'
               "
               @click="toggleMenu"
-              class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 md:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+              class="block py-2 pr-4 pl-3 text-gray-700 md:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
               >About</router-link
             >
           </li>
@@ -83,7 +83,7 @@
                   ? 'text-red-600 bg-blue-700'
                   : 'text-gray-700'
               "
-              class="block py-1 pr-4 pl-3 md:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              class="block py-1 pr-4 pl-3 md:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               @click="toggleMenu"
               >Contact</router-link
             >
