@@ -4,7 +4,11 @@
       class="bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700"
     >
       <a href="#">
-        <img class="rounded-t-lg" :src="imageURL" alt="" />
+        <img
+          class="rounded-t-lg bg-contain w-full max-h-96"
+          :src="imageURL"
+          alt=""
+        />
       </a>
       <h2 class="mt-2 ml-4 text-gray-600">Posted: {{ dateCreated }}</h2>
       <div class="p-5">
@@ -18,8 +22,8 @@
         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
           {{ summary }}
         </p>
-        <a
-          href="#"
+        <router-link
+          :to="'/blogdetail/' + id"
           class="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Read more
@@ -35,7 +39,7 @@
               clip-rule="evenodd"
             ></path>
           </svg>
-        </a>
+        </router-link>
       </div>
     </div>
   </div>
@@ -45,10 +49,11 @@
 export default {
   name: "BlogCard",
   props: {
-    dateCreated: Date,
+    dateCreated: String,
     imageURL: String,
     title: String,
     summary: String,
+    id: Number,
   },
 };
 </script>
