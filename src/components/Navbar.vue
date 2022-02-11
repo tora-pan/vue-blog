@@ -88,6 +88,13 @@
               >Contact</router-link
             >
           </li>
+          <li v-if="!isLoggedIn">
+            <button @click="googleLogin">Login</button>
+          </li>
+          <li v-else>
+            <img :src="userData.photoURL" alt="" />
+            <button @click="googleLogout">Logout</button>
+          </li>
         </ul>
       </div>
     </div>
@@ -95,6 +102,7 @@
 </template>
 
 <script>
+// import { mapGetters } from "vuex";
 export default {
   name: "Navbar",
   data() {
@@ -106,8 +114,22 @@ export default {
     toggleMenu() {
       this.showMenu = false;
     },
+    googleLogin() {
+      this.$store.dispatch("loginUser");
+    },
+    googleLogout() {
+      this.$store.dispatch("logoutUser");
+    },
+    // ...mapGetters(["isLoggedIn", "getUserData"]),
+  },
+  computed: {
+    isLoggedIn() {
+      console.log(this.$store.getters.isLoggedIn);
+      return this.$store.getters.isLoggedIn;
+    },
+    userData() {
+      return this.$store.getters.getUserData;
+    },
   },
 };
 </script>
-
-<style></style>

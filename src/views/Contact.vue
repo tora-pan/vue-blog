@@ -1,9 +1,9 @@
-<template>
-  <h1>Contact Page</h1>
-</template>
+<template>Contact Page</template>
 
 <script>
-export default {};
+export default {
+  name: "Contact",
+};
 </script>
 
 <style></style>
