@@ -1,6 +1,6 @@
 <template>
   <nav class="bg-gray-500 border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-gray-800">
-    <div class="container flex flex-wrap justify-between items-center mx-auto">
+    <div class="container flex flex-wrap justify-between items-center">
       <router-link to="/"
         ><span class="text-3xl">Travis Pandos</span></router-link
       >
@@ -44,7 +44,7 @@
         id="mobile-menu"
       >
         <ul
-          class="flex flex-col mt-4 md:flex-row w-full md:space-x-8 md:mt-0 md:text-lg md:font-medium"
+          class="flex flex-col items-center mt-4 md:flex-row w-full md:space-x-8 md:mt-0 md:text-lg md:font-medium"
         >
           <li>
             <router-link
@@ -91,9 +91,14 @@
           <li v-if="!isLoggedIn">
             <button @click="googleLogin">Login</button>
           </li>
-          <li v-else>
-            <img :src="userData.photoURL" alt="" />
-            <button @click="googleLogout">Logout</button>
+          <li v-else class="flex flex-row px-4">
+            <img
+              :src="userData.photoURL"
+              alt="profilePicture"
+              class="rounded-full w-12 mr-2"
+            />
+            <h2 class="flex items-center mr-4">{{ userData.displayName }}</h2>
+            <button @click="googleLogout" class="ml-4">Logout</button>
           </li>
         </ul>
       </div>
@@ -102,7 +107,6 @@
 </template>
 
 <script>
-// import { mapGetters } from "vuex";
 export default {
   name: "Navbar",
   data() {
@@ -120,11 +124,9 @@ export default {
     googleLogout() {
       this.$store.dispatch("logoutUser");
     },
-    // ...mapGetters(["isLoggedIn", "getUserData"]),
   },
   computed: {
     isLoggedIn() {
-      console.log(this.$store.getters.isLoggedIn);
       return this.$store.getters.isLoggedIn;
     },
     userData() {
