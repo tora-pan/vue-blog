@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { addNewBlog } from "../auth/firebase.utils";
+import { addNewBlog } from "../firebase/firebase.utils";
 export default {
   name: "BlogCard",
   props: {
@@ -58,7 +58,15 @@ export default {
       this.$router.push({ path: `/blogdetail/${this.id}` });
     },
     addBlog() {
-      addNewBlog();
+      const blog = {
+        BlogAuthor: "Travis Pandos",
+        BlogID: 2,
+        BlogImageURL: "Test2.png",
+        BlogText: "this is a test for blog 2",
+        BlogTitle: "Amazing Title",
+        DateCreated: new Date().toISOString().slice(0, 10),
+      };
+      addNewBlog(blog);
     },
   },
 };

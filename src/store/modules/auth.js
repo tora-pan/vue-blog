@@ -1,7 +1,7 @@
-import { googleSignOut } from "../../auth/firebase.utils";
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-// import { getAuth, signOut } from "firebase/auth";
+import { googleSignOut } from "../../firebase/firebase.utils";
+// import firebase from "firebase/compat/app";
+// import "firebase/compat/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 const state = {
   userData: {
@@ -14,6 +14,7 @@ const state = {
 
 const mutations = {
   LOGIN_USER(state, payload) {
+    console.log("gotcalled");
     state.userData.displayName = payload.user.displayName;
     state.userData.email = payload.user.email;
     state.userData.photoURL = payload.user.photoURL;
@@ -25,11 +26,10 @@ const mutations = {
   },
 };
 const actions = {
-  loginUser({ commit }) {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    firebase
-      .auth()
-      .signInWithPopup(provider)
+  async loginUser({ commit }) {
+    const auth = getAuth();
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
       .then((result) => {
         console.log(result);
         commit("LOGIN_USER", result);

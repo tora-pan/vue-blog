@@ -118,11 +118,11 @@ export default {
     toggleMenu() {
       this.showMenu = false;
     },
-    googleLogin() {
-      this.$store.dispatch("loginUser");
-    },
     googleLogout() {
       this.$store.dispatch("logoutUser");
+    },
+    googleLogin() {
+      this.$store.dispatch("loginUser");
     },
   },
   computed: {
