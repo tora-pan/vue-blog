@@ -88,6 +88,19 @@
               >Contact</router-link
             >
           </li>
+          <li v-if="isLoggedIn">
+            <router-link
+              to="/admin"
+              :class="
+                $route.name === 'Admin'
+                  ? 'text-red-600 bg-blue-700'
+                  : 'text-gray-700'
+              "
+              class="block py-1 pr-4 pl-3 md:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              @click="toggleMenu"
+              >Admin</router-link
+            >
+          </li>
           <li v-if="!isLoggedIn">
             <button @click="googleLogin">Login</button>
           </li>
@@ -120,6 +133,7 @@ export default {
     },
     googleLogout() {
       this.$store.dispatch("logoutUser");
+      this.$router.push("/");
     },
     googleLogin() {
       this.$store.dispatch("loginUser");

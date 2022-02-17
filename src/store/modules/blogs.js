@@ -1,4 +1,7 @@
+import { getAllBlogs } from "../../firebase/firebase.utils";
+
 const state = {
+  blogs2: [],
   blogs: [
     {
       imageURL: "https://picsum.photos/400/300",
@@ -55,15 +58,24 @@ const mutations = {
   SET_CURRENTLY_VIEWING(state, payload) {
     state.currentlyViewing = payload;
   },
+  SET_BLOG_DATA(state, payload) {
+    state.blogs2 = payload;
+  },
 };
 const actions = {
   setCurrentlyViewing({ commit }, payload) {
     commit("SET_CURRENTLY_VIEWING", payload);
   },
+  async getAllBlogs({ commit }) {
+    const data = await getAllBlogs();
+    commit("SET_BLOG_DATA", data);
+  },
 };
 const getters = {
-  getAllBlogs: () => state.blogs,
+  getAllBlogs: () => state.blogs2,
   getFeaturedBlog: () => state.blogs[state.blogs.length - 1],
+  getSelectedBlog: (selectedId) =>
+    state.blogs.filter((blog) => blog.id === parseInt(selectedId)),
   getBlogById: () =>
     state.blogs.filter((blog) => blog.id === parseInt(state.currentlyViewing)),
 };
