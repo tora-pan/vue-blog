@@ -17,11 +17,11 @@
       <div class="grid gap-16 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <div class="" v-for="post in getAllBlogs" :key="post.id">
           <BlogCard
-            :imageURL="post.imageURL"
-            :title="post.title"
-            :summary="post.summary"
-            :dateCreated="post.dateCreated"
-            :id="post.id"
+            :imageURL="post.BlogImageURL"
+            :title="post.BlogTitle"
+            :summary="post.BlogText"
+            :dateCreated="post.DateCreated"
+            :id="post.BlogID"
           />
         </div>
       </div>

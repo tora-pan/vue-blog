@@ -82,28 +82,33 @@
       </div>
     </div>
     <!-- Modal -->
-
-    <Modal v-show="isModalVisible" @close="closeModal">
-      <template v-slot:title>
-        {{ allBlogs[0]["BlogTitle"] }}
-      </template>
-      <template v-slot:blogText>
-        {{ currentBlogPost[0]["BlogText"] }}
-      </template>
-    </Modal>
+    <Modal
+      v-show="isModalVisible"
+      @close="closeModal"
+      :titleText="currentBlogPost"
+      :blogText="currentBlogPost"
+    />
   </div>
 </template>
 
 <script>
 import Modal from "../components/Modal";
+import { addNewBlog } from "../firebase/firebase.utils";
 export default {
   name: "Admin",
   data() {
     return {
-      //   blogPosts: [],
+      blogPosts: [],
       toggleModal: false,
-      currentBlogPost: {},
+      currentBlogPost: null,
       isModalVisible: false,
+
+      BlogAuthor: "",
+      BlogID: null,
+      BlogImageURL: "",
+      BlogText: "",
+      BlogTitle: "",
+      DateCreated: null,
     };
   },
   components: {
@@ -117,25 +122,37 @@ export default {
     this.blogPosts = this.$store.state.blogs.blogs2;
   },
   methods: {
+    addBlog() {
+      const blog = {
+        BlogAuthor: "Travis Pandos",
+        BlogID: 2,
+        BlogImageURL: "Test2.png",
+        BlogText: "this is a test for blog 2",
+        BlogTitle: "Amazing Title",
+        DateCreated: new Date().toISOString().slice(0, 10),
+      };
+      addNewBlog(blog);
+    },
     editBlog(blogId) {
       this.currentBlogPost = this.blogPosts.filter(
         (blog) => blog.BlogID === parseInt(blogId)
       );
+      console.log(this.currentBlogPost);
       this.showModal();
     },
     deleteBlog(blogId) {
       console.log(`delete blog ${blogId}`);
+    },
+    getSelectedBlog(blogId) {
+      this.currentBlogPost = this.blogPosts.filter(
+        (blog) => blog.id === blogId
+      );
     },
     editModal() {
       this.toggleModal = !this.toggleModal;
     },
     delteModal() {
       this.toggleModal = true;
-    },
-    getSelectedBlog(blogId) {
-      this.currentBlogPost = this.blogPosts.filter(
-        (blog) => blog.id === blogId
-      );
     },
     showModal() {
       this.isModalVisible = true;

@@ -16,11 +16,18 @@
             class="text-xl font-medium leading-normal text-gray-800"
             id="exampleModalLabel"
           >
-            <slot name="title"> This is the default footer! </slot>
+            <input
+              v-if="blogTitleText"
+              type="text"
+              placeholder="test"
+              :value="blogTitleText[0].BlogTitle"
+            />
+            <!-- <slot name="title"> This is the default footer! </slot> -->
           </h5>
         </div>
         <div class="modal-body relative p-4">
-          <slot name="blogText"> This is the default footer! </slot>
+          <!-- <input type="text" :value="blogText" /> -->
+          <!-- <slot name="blogText"> This is the default footer! </slot> -->
         </div>
         <div
           class="modal-footer flex flex-shrink-0 flex-wrap items-center justify-end p-4 border-t border-gray-200 rounded-b-md"
@@ -49,8 +56,18 @@
 <script>
 export default {
   name: "Modal",
+  props: {
+    titleText: Array,
+    blogText: Array,
+  },
+  data() {
+    return {
+      blogTitleText: null,
+    };
+  },
   methods: {
     close() {
+      this.blogTitleText = this.titleText;
       this.$emit("close");
     },
     save() {
