@@ -83,10 +83,10 @@
     </div>
     <!-- Modal -->
     <Modal
-      v-show="isModalVisible"
       @close="closeModal"
-      :titleText="currentBlogPost"
+      v-show="isModalVisible"
       :blogText="currentBlogPost"
+      :titleText="currentBlogPost"
     />
   </div>
 </template>
