@@ -144,10 +144,10 @@ export default {
       this.currentBlogPost = this.thePosts.filter(
         (blog) => blog.BlogID === parseInt(blogId)
       );
-      console.log(this.currentBlogPost[0].BlogTitle);
       this.showModal();
     },
     deleteBlog(blogId) {
+      // todo
       console.log(`delete blog ${blogId}`);
     },
     getSelectedBlog(blogId) {
@@ -155,12 +155,7 @@ export default {
         (blog) => blog.id === blogId
       );
     },
-    editModal() {
-      this.toggleModal = !this.toggleModal;
-    },
-    delteModal() {
-      this.toggleModal = true;
-    },
+
     showModal() {
       this.isModalVisible = true;
     },
