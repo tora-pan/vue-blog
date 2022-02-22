@@ -16,12 +16,7 @@
             class="text-xl font-medium leading-normal text-gray-800"
             id="exampleModalLabel"
           >
-            <input
-              v-if="blogTitleText"
-              type="text"
-              placeholder="test"
-              :value="blogTitleText[0].BlogTitle"
-            />
+            <input type="text" :placeholder="titleText" :value="titleText" />
             <!-- <slot name="title"> This is the default footer! </slot> -->
           </h5>
         </div>
@@ -57,17 +52,11 @@
 export default {
   name: "Modal",
   props: {
-    titleText: Array,
-    blogText: Array,
-  },
-  data() {
-    return {
-      blogTitleText: null,
-    };
+    titleText: String,
+    blogText: String,
   },
   methods: {
     close() {
-      this.blogTitleText = this.titleText;
       this.$emit("close");
     },
     save() {

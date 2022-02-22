@@ -32,7 +32,7 @@
               </thead>
               <tbody>
                 <tr
-                  v-for="post in blogPosts"
+                  v-for="post in thePosts"
                   :key="post.id"
                   class="bg-white border-b transition duration-75 ease-in-out hover:bg-gray-100"
                 >
@@ -85,22 +85,23 @@
     <Modal
       @close="closeModal"
       v-show="isModalVisible"
-      :blogText="currentBlogPost"
-      :titleText="currentBlogPost"
+      :blogText="currentBlogPost ? currentBlogPost[0].BlogText : ''"
+      :titleText="currentBlogPost ? currentBlogPost[0].BlogTitle : ''"
     />
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import Modal from "../components/Modal";
 import { addNewBlog } from "../firebase/firebase.utils";
 export default {
   name: "Admin",
   data() {
     return {
-      blogPosts: [],
+      blogPosts: null,
       toggleModal: false,
-      currentBlogPost: null,
+      currentBlogPost: "",
       isModalVisible: false,
 
       BlogAuthor: "",
@@ -111,15 +112,21 @@ export default {
       DateCreated: null,
     };
   },
+  watch: {
+    allBlogs(newPosts, oldPosts) {
+      console.log(`We have ${newPosts}, posts now, yay!`);
+      console.log(`The old posts is ${oldPosts}`);
+    },
+  },
   components: {
     Modal,
   },
   computed: {
-    allBlogs: () => this.$store.getters.getAllBlogs,
+    ...mapGetters({ thePosts: "getAllBlogs" }),
   },
   created() {
     this.$store.dispatch("getAllBlogs");
-    this.blogPosts = this.$store.state.blogs.blogs2;
+    console.log(this.thePosts);
   },
   methods: {
     addBlog() {
@@ -134,10 +141,10 @@ export default {
       addNewBlog(blog);
     },
     editBlog(blogId) {
-      this.currentBlogPost = this.blogPosts.filter(
+      this.currentBlogPost = this.thePosts.filter(
         (blog) => blog.BlogID === parseInt(blogId)
       );
-      console.log(this.currentBlogPost);
+      console.log(this.currentBlogPost[0].BlogTitle);
       this.showModal();
     },
     deleteBlog(blogId) {

@@ -59,7 +59,7 @@ const mutations = {
     state.currentlyViewing = payload;
   },
   SET_BLOG_DATA(state, payload) {
-    state.blogs2 = payload;
+    state.blogs2 = [...payload];
   },
 };
 const actions = {
