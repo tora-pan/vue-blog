@@ -49,7 +49,7 @@ export default {
     imageURL: String,
     title: String,
     summary: String,
-    id: Number,
+    id: String,
   },
   methods: {
     handleViewMore() {

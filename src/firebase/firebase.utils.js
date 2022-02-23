@@ -81,7 +81,11 @@ export const addNewBlog = async (blogData) => {
 export const getAllBlogs = async () => {
   const blogsCol = collection(db, "blogs");
   const blogSnapshot = await getDocs(blogsCol);
-  const blogList = blogSnapshot.docs.map((doc) => doc.data());
+  const blogList = blogSnapshot.docs.map((doc) => ({
+    id: doc.id,
+    blogData: doc.data(),
+  }));
+  console.log(blogList);
   return blogList;
 };
 

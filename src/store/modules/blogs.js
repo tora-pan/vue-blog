@@ -61,23 +61,30 @@ const mutations = {
   SET_BLOG_DATA(state, payload) {
     state.blogs2 = [...payload];
   },
+  ADD_BLOG(state, payload) {
+    state.blogs2 = [state.blogs2, ...payload];
+  },
 };
 const actions = {
   setCurrentlyViewing({ commit }, payload) {
+    console.log("payload:", payload);
     commit("SET_CURRENTLY_VIEWING", payload);
   },
   async getAllBlogs({ commit }) {
     const data = await getAllBlogs();
     commit("SET_BLOG_DATA", data);
   },
+  addBlog({ commit }, data) {
+    commit("ADD_BLOG", data);
+  },
 };
 const getters = {
   getAllBlogs: () => state.blogs2,
-  getFeaturedBlog: () => state.blogs[state.blogs.length - 1],
+  getFeaturedBlog: () => state.blogs2[0],
   getSelectedBlog: (selectedId) =>
-    state.blogs.filter((blog) => blog.id === parseInt(selectedId)),
+    state.blogs2.filter((blog) => blog.id === parseInt(selectedId)),
   getBlogById: () =>
-    state.blogs.filter((blog) => blog.id === parseInt(state.currentlyViewing)),
+    state.blogs2.filter((blog) => blog.id === state.currentlyViewing),
 };
 
 export default {

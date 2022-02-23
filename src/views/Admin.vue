@@ -39,17 +39,17 @@
                   <td
                     class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
                   >
-                    {{ post.BlogID }}
+                    {{ post.blogData.BlogID }}
                   </td>
                   <td
                     class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
                   >
-                    {{ post.BlogTitle }}
+                    {{ post.blogData.BlogTitle }}
                   </td>
                   <td
                     class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
                   >
-                    {{ post.DateCreated }}
+                    {{ post.blogData.DateCreated }}
                   </td>
                   <td
                     class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap cursor-pointer text-center"
@@ -57,19 +57,19 @@
                     <button
                       type="button"
                       class="px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-75 ease-in-out"
-                      @click="editBlog(post.BlogID)"
+                      @click="editBlog(post.id)"
                     >
                       Edit
                     </button>
                   </td>
                   <td
                     class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap cursor-pointertext-center"
-                    @click="deleteBlog(post.BlogID)"
+                    @click="deleteBlog(post.id)"
                   >
                     <button
                       type="button"
                       class="px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-75 ease-in-out"
-                      @click="editBlog(post.BlogID)"
+                      @click="editBlog(post.id)"
                     >
                       Delete
                     </button>
@@ -88,13 +88,15 @@
       :blogText="currentBlogPost ? currentBlogPost[0].BlogText : ''"
       :titleText="currentBlogPost ? currentBlogPost[0].BlogTitle : ''"
     />
+    <!-- New Blog Form -->
+    <BlogForm />
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import Modal from "../components/Modal";
-import { addNewBlog } from "../firebase/firebase.utils";
+import BlogForm from "../components/BlogForm.vue";
 export default {
   name: "Admin",
   data() {
@@ -120,6 +122,7 @@ export default {
   },
   components: {
     Modal,
+    BlogForm,
   },
   computed: {
     ...mapGetters({ thePosts: "getAllBlogs" }),
@@ -129,17 +132,6 @@ export default {
     console.log(this.thePosts);
   },
   methods: {
-    addBlog() {
-      const blog = {
-        BlogAuthor: "Travis Pandos",
-        BlogID: 2,
-        BlogImageURL: "Test2.png",
-        BlogText: "this is a test for blog 2",
-        BlogTitle: "Amazing Title",
-        DateCreated: new Date().toISOString().slice(0, 10),
-      };
-      addNewBlog(blog);
-    },
     editBlog(blogId) {
       this.currentBlogPost = this.thePosts.filter(
         (blog) => blog.BlogID === parseInt(blogId)

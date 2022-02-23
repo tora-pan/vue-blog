@@ -5,10 +5,11 @@
     <!-- Featured Blog Post -->
     <div class="w-5/6 mx-auto my-8">
       <FeaturedCard
-        :imageURL="getFeaturedBlog.imageURL"
-        :title="getFeaturedBlog.title"
-        :summary="getFeaturedBlog.summary"
-        :dateCreated="getFeaturedBlog.dateCreated"
+        v-if="getFeaturedBlog"
+        :imageURL="getFeaturedBlog.blogData.BlogImageURL"
+        :title="getFeaturedBlog.blogData.BlogTitle"
+        :summary="getFeaturedBlog.blogData.BlogText"
+        :dateCreated="getFeaturedBlog.blogData.DateCreated"
         :id="getFeaturedBlog.id"
       />
     </div>
@@ -17,11 +18,11 @@
       <div class="grid gap-16 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <div class="" v-for="post in getAllBlogs" :key="post.id">
           <BlogCard
-            :imageURL="post.BlogImageURL"
-            :title="post.BlogTitle"
-            :summary="post.BlogText"
-            :dateCreated="post.DateCreated"
-            :id="post.BlogID"
+            :imageURL="post.blogData.BlogImageURL"
+            :title="post.blogData.BlogTitle"
+            :summary="post.blogData.BlogText"
+            :dateCreated="post.blogData.DateCreated"
+            :id="post.id"
           />
         </div>
       </div>
