@@ -32,14 +32,14 @@
               </thead>
               <tbody>
                 <tr
-                  v-for="post in thePosts"
+                  v-for="post in blogPosts"
                   :key="post.id"
                   class="bg-white border-b transition duration-75 ease-in-out hover:bg-gray-100"
                 >
                   <td
                     class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
                   >
-                    {{ post.blogData.BlogID }}
+                    {{ post.id }}
                   </td>
                   <td
                     class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
@@ -64,7 +64,6 @@
                   </td>
                   <td
                     class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap cursor-pointertext-center"
-                    @click="deleteBlog(post.id)"
                   >
                     <button
                       type="button"
@@ -84,9 +83,9 @@
     <!-- Modal -->
     <Modal
       @close="closeModal"
-      v-show="isModalVisible"
-      :blogText="currentBlogPost ? currentBlogPost[0].BlogText : ''"
-      :titleText="currentBlogPost ? currentBlogPost[0].BlogTitle : ''"
+      @save="saveModalData"
+      v-if="isModalVisible"
+      :blogData="currentBlogPost"
     />
     <!-- New Blog Form -->
     <BlogForm />
@@ -103,7 +102,7 @@ export default {
     return {
       blogPosts: null,
       toggleModal: false,
-      currentBlogPost: "",
+      currentBlogPost: {},
       isModalVisible: false,
 
       BlogAuthor: "",
@@ -114,12 +113,6 @@ export default {
       DateCreated: null,
     };
   },
-  watch: {
-    allBlogs(newPosts, oldPosts) {
-      console.log(`We have ${newPosts}, posts now, yay!`);
-      console.log(`The old posts is ${oldPosts}`);
-    },
-  },
   components: {
     Modal,
     BlogForm,
@@ -128,13 +121,15 @@ export default {
     ...mapGetters({ thePosts: "getAllBlogs" }),
   },
   created() {
-    this.$store.dispatch("getAllBlogs");
-    console.log(this.thePosts);
+    this.$store.dispatch("newGetAllBlogs").then((response) => {
+      this.blogPosts = [...response];
+      this.currentBlogPost = response;
+    });
   },
   methods: {
     editBlog(blogId) {
-      this.currentBlogPost = this.thePosts.filter(
-        (blog) => blog.BlogID === parseInt(blogId)
+      this.currentBlogPost = this.blogPosts.filter(
+        (blog) => blog.id === blogId
       );
       this.showModal();
     },
@@ -151,8 +146,14 @@ export default {
     showModal() {
       this.isModalVisible = true;
     },
-    closeModal() {
+    closeModal(data) {
       this.isModalVisible = false;
+      console.log(data);
+    },
+    saveModalData(data) {
+      console.log(data);
+      this.isModalVisible = false;
+      this.$store.dispatch("updateBlogData", data);
     },
   },
 };

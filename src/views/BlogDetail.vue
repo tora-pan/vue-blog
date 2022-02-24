@@ -41,7 +41,6 @@ export default {
   created() {
     this.$store.dispatch("setCurrentlyViewing", this.$route.params.id);
     this.currentBlogPost = this.$store.getters.getBlogById[0];
-    console.log(this.currentBlogPost);
   },
 };
 </script>

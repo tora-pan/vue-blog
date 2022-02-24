@@ -1,4 +1,4 @@
-import { getAllBlogs } from "../../firebase/firebase.utils";
+import { getAllBlogs, updateBlog } from "../../firebase/firebase.utils";
 
 const state = {
   blogs2: [],
@@ -67,15 +67,32 @@ const mutations = {
 };
 const actions = {
   setCurrentlyViewing({ commit }, payload) {
-    console.log("payload:", payload);
     commit("SET_CURRENTLY_VIEWING", payload);
   },
   async getAllBlogs({ commit }) {
     const data = await getAllBlogs();
     commit("SET_BLOG_DATA", data);
   },
+  newGetAllBlogs({ commit }) {
+    return new Promise((resolve, reject) => {
+      getAllBlogs().then(
+        (response) => {
+          commit("SET_BLOG_DATA", response);
+          resolve(response);
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  },
   addBlog({ commit }, data) {
     commit("ADD_BLOG", data);
+  },
+  updateBlogData(state, data) {
+    console.log("thedata", data);
+    updateBlog(data);
+    // commit();
   },
 };
 const getters = {

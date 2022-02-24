@@ -4,7 +4,14 @@
 // import "firebase/compat/firestore";
 
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, addDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  addDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 import {
   getAuth,
   signInWithPopup,
@@ -78,6 +85,14 @@ export const addNewBlog = async (blogData) => {
   console.log("doccument written with ID: ", docRef.id);
 };
 
+export const updateBlog = async (blogData) => {
+  console.log("firebase", blogData.blogTitle);
+  await updateDoc(doc(db, "blogs", blogData.id), {
+    BlogTitle: blogData.blogTitle,
+    BlogText: blogData.blogText,
+  });
+};
+
 export const getAllBlogs = async () => {
   const blogsCol = collection(db, "blogs");
   const blogSnapshot = await getDocs(blogsCol);
@@ -85,7 +100,7 @@ export const getAllBlogs = async () => {
     id: doc.id,
     blogData: doc.data(),
   }));
-  console.log(blogList);
+
   return blogList;
 };
 

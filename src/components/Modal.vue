@@ -4,6 +4,7 @@
     id="exampleModal"
     tabindex="-1"
     aria-labelledby="exampleModalLabel"
+    v-if="blogData"
   >
     <div class="modal-dialog relative w-auto pointer-events-none">
       <div
@@ -16,12 +17,12 @@
             class="text-xl font-medium leading-normal text-gray-800"
             id="exampleModalLabel"
           >
-            <input type="text" :placeholder="titleText" :value="titleText" />
+            <input type="text" :value="newTitle" @input="updateTitle" />
             <!-- <slot name="title"> This is the default footer! </slot> -->
           </h5>
         </div>
         <div class="modal-body relative p-4">
-          <!-- <input type="text" :value="blogText" /> -->
+          <input type="text" :value="newText" @input="updateText" />
           <!-- <slot name="blogText"> This is the default footer! </slot> -->
         </div>
         <div
@@ -38,7 +39,7 @@
           <button
             type="button"
             class="px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1"
-            @click="save"
+            @click="save({ blogTitle: newTitle, blogText: newText })"
           >
             Save changes
           </button>
@@ -51,16 +52,34 @@
 <script>
 export default {
   name: "Modal",
+  data() {
+    return {
+      newTitle: "",
+      newText: "",
+      id: "",
+    };
+  },
   props: {
-    titleText: String,
-    blogText: String,
+    blogData: Object,
+  },
+  created() {
+    this.newTitle = this.blogData[0].blogData.BlogTitle;
+    this.newText = this.blogData[0].blogData.BlogText;
+    this.id = this.blogData[0].id;
   },
   methods: {
     close() {
       this.$emit("close");
     },
-    save() {
-      this.$emit("save");
+    save(data) {
+      const newData = { id: this.id, ...data };
+      this.$emit("save", newData);
+    },
+    updateTitle(e) {
+      this.newTitle = e.target.value;
+    },
+    updateText(e) {
+      this.newText = e.target.value;
     },
   },
 };
