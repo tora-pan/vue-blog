@@ -11,6 +11,7 @@ import {
   addDoc,
   doc,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -91,6 +92,10 @@ export const updateBlog = async (blogData) => {
     BlogTitle: blogData.blogTitle,
     BlogText: blogData.blogText,
   });
+};
+
+export const deleteBlog = async (blogData) => {
+  await deleteDoc(doc(db, "blogs", blogData));
 };
 
 export const getAllBlogs = async () => {

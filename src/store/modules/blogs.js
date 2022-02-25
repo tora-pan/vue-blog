@@ -1,57 +1,11 @@
-import { getAllBlogs, updateBlog } from "../../firebase/firebase.utils";
+import {
+  getAllBlogs,
+  updateBlog,
+  deleteBlog,
+} from "../../firebase/firebase.utils";
 
 const state = {
-  blogs2: [],
-  blogs: [
-    {
-      imageURL: "https://picsum.photos/400/300",
-      title: "Test Blog Post 1",
-      summary:
-        "Here is a little summary Here is a bunch of text for a summary Here is a bunch of text for a summary",
-      dateCreated: "2/7/2020",
-      id: 1,
-    },
-    {
-      imageURL: "https://picsum.photos/400/300",
-      title: "Test Blog Post 2",
-      summary:
-        "Here is a little summary Here is a bunch of text for a summary Here is a bunch of text for a summary",
-      dateCreated: "2/7/2020",
-      id: 2,
-    },
-    {
-      imageURL: "https://picsum.photos/400/300",
-      title: "Test Blog Post 3",
-      summary:
-        "Here is a bunch of text for a summary Here is a bunch of text for a summary Here is a bunch of text for a summary",
-      dateCreated: "2/7/2020",
-      id: 3,
-    },
-    {
-      imageURL: "https://picsum.photos/400/300",
-      title: "Test Blog Post 4",
-      summary:
-        "Here is a little summary Here is a bunch of text for a summary Here is a bunch of text for a summary",
-      dateCreated: "2/7/2020",
-      id: 4,
-    },
-    {
-      imageURL: "https://picsum.photos/400/300",
-      title: "Test Blog Post 5",
-      summary:
-        "Here is a little summary Here is a bunch of text for a summary Here is a bunch of text for a summary",
-      dateCreated: "2/7/2020",
-      id: 5,
-    },
-    {
-      imageURL: "https://picsum.photos/400/300",
-      title: "Test Blog Post 6",
-      summary:
-        "Here is a bunch of text for a summary Here is a bunch of text for a summary Here is a bunch of text for a summary",
-      dateCreated: "2/7/2020",
-      id: 6,
-    },
-  ],
+  blogs: [],
   currentlyViewing: null,
 };
 const mutations = {
@@ -59,10 +13,16 @@ const mutations = {
     state.currentlyViewing = payload;
   },
   SET_BLOG_DATA(state, payload) {
-    state.blogs2 = [...payload];
+    state.blogs = [...payload];
   },
   ADD_BLOG(state, payload) {
-    state.blogs2 = [state.blogs2, ...payload];
+    state.blogs = [state.blogs, ...payload];
+  },
+  DELETE_BLOG(state, payload) {
+    // state.blogs = state.blogs.filter((blog) => blog.id !== payload);
+    const i = state.blogs.map((item) => item.id).indexOf(payload);
+    state.blogs.splice(i, 1);
+    console.log("newBlogs: ", state.blogs);
   },
 };
 const actions = {
@@ -89,6 +49,10 @@ const actions = {
   addBlog({ commit }, data) {
     commit("ADD_BLOG", data);
   },
+  deleteBlog({ commit }, data) {
+    deleteBlog(data);
+    commit("DELETE_BLOG", data);
+  },
   updateBlogData(state, data) {
     console.log("thedata", data);
     updateBlog(data);
@@ -96,12 +60,12 @@ const actions = {
   },
 };
 const getters = {
-  getAllBlogs: () => state.blogs2,
-  getFeaturedBlog: () => state.blogs2[0],
+  getAllBlogs: () => state.blogs,
+  getFeaturedBlog: () => state.blogs[0],
   getSelectedBlog: (selectedId) =>
-    state.blogs2.filter((blog) => blog.id === parseInt(selectedId)),
+    state.blogs.filter((blog) => blog.id === parseInt(selectedId)),
   getBlogById: () =>
-    state.blogs2.filter((blog) => blog.id === state.currentlyViewing),
+    state.blogs.filter((blog) => blog.id === state.currentlyViewing),
 };
 
 export default {

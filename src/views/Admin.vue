@@ -32,7 +32,7 @@
               </thead>
               <tbody>
                 <tr
-                  v-for="post in blogPosts"
+                  v-for="post in thePosts"
                   :key="post.id"
                   class="bg-white border-b transition duration-75 ease-in-out hover:bg-gray-100"
                 >
@@ -68,7 +68,7 @@
                     <button
                       type="button"
                       class="px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-75 ease-in-out"
-                      @click="editBlog(post.id)"
+                      @click="deleteBlog(post.id)"
                     >
                       Delete
                     </button>
@@ -126,6 +126,7 @@ export default {
       this.currentBlogPost = response;
     });
   },
+
   methods: {
     editBlog(blogId) {
       this.currentBlogPost = this.blogPosts.filter(
@@ -136,6 +137,7 @@ export default {
     deleteBlog(blogId) {
       // todo
       console.log(`delete blog ${blogId}`);
+      this.$store.dispatch("deleteBlog", blogId);
     },
     getSelectedBlog(blogId) {
       this.currentBlogPost = this.blogPosts.filter(
@@ -154,6 +156,9 @@ export default {
       console.log(data);
       this.isModalVisible = false;
       this.$store.dispatch("updateBlogData", data);
+      this.$store.dispatch("newGetAllBlogs").then((response) => {
+        this.blogPosts = response;
+      });
     },
   },
 };
