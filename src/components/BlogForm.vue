@@ -55,6 +55,7 @@ export default {
         DateCreated: new Date().toISOString().slice(0, 10),
       };
       addNewBlog(blog);
+      this.$store.dispatch("newGetAllBlogs");
     },
   },
 };

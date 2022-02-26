@@ -16,10 +16,10 @@ const mutations = {
     state.blogs = [...payload];
   },
   ADD_BLOG(state, payload) {
+    console.log(payload);
     state.blogs = [state.blogs, ...payload];
   },
   DELETE_BLOG(state, payload) {
-    // state.blogs = state.blogs.filter((blog) => blog.id !== payload);
     const i = state.blogs.map((item) => item.id).indexOf(payload);
     state.blogs.splice(i, 1);
     console.log("newBlogs: ", state.blogs);
@@ -60,8 +60,8 @@ const actions = {
   },
 };
 const getters = {
-  getAllBlogs: () => state.blogs,
-  getFeaturedBlog: () => state.blogs[0],
+  getAllBlogs: (state) => state.blogs,
+  getFeaturedBlog: (state) => state.blogs[0],
   getSelectedBlog: (selectedId) =>
     state.blogs.filter((blog) => blog.id === parseInt(selectedId)),
   getBlogById: () =>

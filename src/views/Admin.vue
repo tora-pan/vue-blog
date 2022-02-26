@@ -122,8 +122,9 @@ export default {
   },
   created() {
     this.$store.dispatch("newGetAllBlogs").then((response) => {
-      this.blogPosts = [...response];
-      this.currentBlogPost = response;
+      // this.blogPosts = [...response];
+      // this.currentBlogPost = response;
+      console.log(response);
     });
   },
 
